@@ -1,0 +1,14 @@
+{
+  "threshold": 50000,
+  "pack_tokens": 60000,
+  "candidate_tokens": 16000,
+  "candidates": 40,
+  "rounds": 2,
+  "confidence": 0.8,
+  "max_final_tokens": 200000,
+  "timeout": 6,
+  "laya_batch": 4,
+  "laya_url": "",
+  "laya_command": [],
+  "keychain_timeout": 50
+}

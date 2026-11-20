@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: transparent; overflow: hidden; }
+    /* 岛体：收起=贴顶小条；展开=长到全画布。尺寸由主进程按模式下发，过渡动画在这里 */
+    #island {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 38px;
+      background: #0B0D10; border-radius: 0 0 16px 16px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; user-select: none;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+    }
+    /* 展开态岛体 top 由主进程下发（菜单栏带下方）；这里只保留收起默认值 */
+    body.anim #island {
+      transition: width .3s cubic-bezier(.22, .7, .3, 1), height .3s cubic-bezier(.22, .7, .3, 1), top .3s cubic-bezier(.22, .7, .3, 1);
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #8B7CF6; box-shadow: 0 0 8px rgba(139, 124, 246, .8);
+      transition: opacity .18s ease;
+    }
+    body.expanded #island { cursor: default; }
+    body.expanded .dot { opacity: 0; }
+    @media (prefers-reduced-motion: reduce) { body.anim #island { transition: none; } }
+  </style>
+</head>
+<body class="collapsed">
+  <div id="island" title="展开 Context Gate 控制台（⌘⇧E）"><span class="dot"></span></div>
+  <script src="host.js"></script>
+</body>
+</html>

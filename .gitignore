@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+.env
+.env.*
+work/
+backups/
+.context-gate/
+*.bak-*
+console/app_bundle/build/
+console/notch/node_modules/
+console/notch/dist.noindex/

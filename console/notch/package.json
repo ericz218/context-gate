@@ -1,0 +1,45 @@
+{
+  "name": "context-gate-console-panel",
+  "productName": "Context Gate 控制台",
+  "version": "1.0.0",
+  "description": "Context Gate 控制台的刘海面板壳：贴顶收起、⌘⇧E 唤出，内容为本机 console/app.py",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --mac dmg --publish never"
+  },
+  "devDependencies": {
+    "electron": "^44.0.0",
+    "electron-builder": "^26.15.7"
+  },
+  "build": {
+    "appId": "local.context-gate.console-panel",
+    "productName": "Context Gate 控制台",
+    "directories": {
+      "output": "dist.noindex"
+    },
+    "files": [
+      "main.js",
+      "console-embed.js",
+      "console-shim.js",
+      "host-preload.js",
+      "renderer/**/*",
+      "build/**/*",
+      "afterPack.js",
+      "package.json"
+    ],
+    "afterPack": "afterPack.js",
+    "mac": {
+      "identity": null,
+      "category": "public.app-category.utilities",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64"
+          ]
+        }
+      ]
+    }
+  }
+}
