@@ -2715,6 +2715,8 @@ PAGE = PAGE.replace('<div class="brand"><span>Context Gate</span></div>', '<div 
 PAGE = PAGE.replace('<div class="nav-footer">', '</div><div class="nav-footer">', 1)
 from console.usability_ui import improve_page
 PAGE = improve_page(PAGE)
+from console.tutorial_ui import apply_tutorial_and_i18n
+PAGE = apply_tutorial_and_i18n(PAGE)
 THEME_STYLE_CSS = r'''
 :root.switching-appearance *, :root.switching-appearance *::before, :root.switching-appearance *::after{transition:none!important}
 html{scrollbar-gutter:stable}

@@ -98,8 +98,29 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
     private let localSession = URLSession(configuration: .ephemeral, delegate: ConsoleLocalSession(), delegateQueue: nil)
     var hotkeyRef: EventHotKeyRef?
     var appliedHotkey = ""
-    var uiLanguage = UserDefaults.standard.string(forKey: "ContextGateUILanguage") ?? "zh"
-    var englishUI: Bool { uiLanguage == "en" }
+    static let supportedLanguages: Set<String> = ["zh", "zh-TW", "en", "ja", "ko", "es", "fr", "de"]
+    static func detectSystemLanguage() -> String {
+        for raw in Locale.preferredLanguages {
+            let s = raw.lowercased().replacingOccurrences(of: "_", with: "-")
+            if s == "zh-tw" || s == "zh-hk" || s == "zh-mo" || s.hasPrefix("zh-hant") { return "zh-TW" }
+            if s.hasPrefix("zh") { return "zh" }
+            if s.hasPrefix("en") { return "en" }
+            if s.hasPrefix("ja") { return "ja" }
+            if s.hasPrefix("ko") { return "ko" }
+            if s.hasPrefix("es") { return "es" }
+            if s.hasPrefix("fr") { return "fr" }
+            if s.hasPrefix("de") { return "de" }
+        }
+        return "en"
+    }
+    var uiLanguage: String = {
+        if let saved = UserDefaults.standard.string(forKey: "ContextGateUILanguage"),
+           AppDelegate.supportedLanguages.contains(saved) {
+            return saved
+        }
+        return AppDelegate.detectSystemLanguage()
+    }()
+    var englishUI: Bool { uiLanguage != "zh" && uiLanguage != "zh-TW" }
     func ui(_ zh: String, _ en: String) -> String { englishUI ? en : zh }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -656,13 +677,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         let retained = controller.userScripts.filter { !$0.source.hasPrefix(prefix) }
         controller.removeAllUserScripts()
         retained.forEach { controller.addUserScript($0) }
-        let language = englishUI ? "en" : "zh"
+        let language = AppDelegate.supportedLanguages.contains(uiLanguage) ? uiLanguage : "zh"
         controller.addUserScript(WKUserScript(source: prefix + "'" + language + "';",
                                              injectionTime: .atDocumentStart, forMainFrameOnly: true))
     }
 
     func applyUILanguage(_ language: String) {
-        guard language == "en" || language == "zh" else { return }
+        guard AppDelegate.supportedLanguages.contains(language) else { return }
         let changed = language != uiLanguage
         uiLanguage = language
         UserDefaults.standard.set(language, forKey: "ContextGateUILanguage")
