@@ -842,11 +842,20 @@ function setAppearance(style,t){
   style=style==='mono'||style==='original'?style:'prism';t=t==='warm'?'warm':'dark';
   try{localStorage.setItem('cg-theme',t);localStorage.setItem('cg-theme-style',style)}catch(e){}
   const root=document.documentElement;
-  root.classList.add('switching-appearance');
-  applyThemeAttr(t,style);
-  // Resolve the new palette together before restoring normal hover transitions.
-  void getComputedStyle(document.body).backgroundColor;
-  root.classList.remove('switching-appearance');
+  // A cross-fade runs its update later; always apply the latest request so quick toggles cannot race.
+  window.__cgWantAppearance={t,style};
+  const swap=()=>{
+    const want=window.__cgWantAppearance;
+    root.classList.add('switching-appearance');
+    applyThemeAttr(want.t,want.style);
+    // Resolve the new palette together before restoring normal hover transitions.
+    void getComputedStyle(document.body).backgroundColor;
+    root.classList.remove('switching-appearance');
+  };
+  // Cross-fade a real appearance change (one GPU snapshot); first paint and no-op calls swap directly.
+  const changed=root.dataset.theme!==t||root.dataset.style!==style;
+  const still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(changed&&document.startViewTransition&&!still&&document.body)document.startViewTransition(swap);else swap();
   try{if(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.theme)window.webkit.messageHandlers.theme.postMessage(t)}catch(e){}
 }
 function setTheme(t){setAppearance(document.documentElement.dataset.style||'prism',t)}
@@ -2053,10 +2062,11 @@ function applyView(v){
   document.querySelectorAll('.nav-item').forEach(n=>{const on=n.dataset.v===v;n.classList.toggle('on',on);if(on)n.setAttribute('aria-current','page');else n.removeAttribute('aria-current');});
   const show=new Set(VIEWS[v]||[]);
   const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let rise=0;
   viewSections.forEach(el=>{
     const should=show.has(el.dataset.view),was=el.style.display!=='none';
     el.style.display=should?(el.classList.contains('grid')||el.classList.contains('ovrow')?'grid':'block'):'none';
-    if(should&&!was&&!reduce)el.animate([{opacity:.65},{opacity:1}],{duration:140,easing:'ease-out'});
+    if(should&&!was&&!reduce)el.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:300,delay:Math.min(rise++,6)*35,easing:'cubic-bezier(.16,1,.3,1)',fill:'backwards'});
   });
   const hasFilters=['overview','bill','plat','req'].includes(v),routerFilters=v==='router';$('dd-period').hidden=!hasFilters;$('dd-platform').hidden=!hasFilters;$('dd-router-period').hidden=!routerFilters;$('dd-router-provider').hidden=!routerFilters;
   if(routerFilters)syncRouterFilters();

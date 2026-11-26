@@ -7,7 +7,7 @@ no backdrop blur on persistent chrome and no animated or fixed backgrounds.
 
 CSS = r'''
 /* ===== 黑曜棱镜 · tokens ===== */
-:root[data-style=prism]{--p1:#4C8DF6;--p2:#9B72CB;--p3:#D96570;--p4:#F2B84B;--prism:linear-gradient(90deg,var(--p1),var(--p2) 38%,var(--p3) 70%,var(--p4));--prism-v:linear-gradient(180deg,var(--p1),var(--p2) 55%,var(--p3));--r-sm:8px;--r-md:10px;--r-lg:12px;--ease:cubic-bezier(.2,0,0,1)}
+:root[data-style=prism]{--p1:#4C8DF6;--p2:#9B72CB;--p3:#D96570;--p4:#F2B84B;--prism:linear-gradient(90deg,var(--p1),var(--p2) 38%,var(--p3) 70%,var(--p4));--prism-v:linear-gradient(180deg,var(--p1),var(--p2) 55%,var(--p3));--r-sm:8px;--r-md:10px;--r-lg:12px;--ease:cubic-bezier(.2,0,0,1);--ease-out:cubic-bezier(.16,1,.3,1)}
 :root[data-style=prism][data-theme=dark]{color-scheme:dark;--bg:#0E0E11;--sidebg:#09090B;--card:#151519;--card2:#1C1C21;--cardT:#151519;--field:#0F0F12;--chip:rgba(255,255,255,.035);--chipbg:#1C1C21;--line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);--glassline:rgba(255,255,255,.085);--text:#F2F2F5;--muted:#A2A2AF;--accent:#7EA9F7;--accent2:#5B89D6;--onaccent:#08101F;--accentbg:rgba(126,169,247,.13);--rowhover:rgba(255,255,255,.04);--ok:#4CC38A;--okbg:rgba(76,195,138,.13);--bad:#F2685F;--badbg:rgba(242,104,95,.13);--warn:#F2B84B;--warnbg:rgba(242,184,75,.13);--mutbg:rgba(255,255,255,.06);--tipbg:#202027;--tiptext:#F2F2F5;--prebg:#09090B;--pretext:#E4E4EA;--hl:rgba(255,255,255,.06);--shadow:0 6px 18px -6px rgba(0,0,0,.6);--cardshadow:0 1px 2px rgba(0,0,0,.35),0 10px 28px -16px rgba(0,0,0,.8);--panelshadow:inset 0 1px 0 rgba(255,255,255,.07),0 0 0 .5px rgba(0,0,0,.5),0 24px 60px -12px rgba(0,0,0,.75);--lift:0 14px 36px -14px rgba(0,0,0,.8);--glassbg:#18181D;--g1:transparent;--g2:transparent;--g3:transparent;--refreshshadow:none;--sel-fill:color-mix(in srgb,#7EA9F7 15%,#18181D);--sel-glow:0 4px 16px -6px rgba(76,141,246,.55),0 2px 12px -6px rgba(217,101,112,.35);--bar-glow:0 0 12px rgba(76,141,246,.45);--cost:#7EA9F7;--costbg:rgba(126,169,247,.13);--chev:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%238F8F9C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>")}
 :root[data-style=prism][data-theme=warm]{color-scheme:light;--bg:#F4F6FA;--sidebg:#ECF0F6;--card:#FFFFFF;--card2:#F1F4F9;--cardT:#FFFFFF;--field:#F7F9FC;--chip:#F4F6FA;--chipbg:#EEF2F8;--line:rgba(15,23,42,.08);--line2:rgba(15,23,42,.15);--glassline:rgba(15,23,42,.11);--text:#0F172A;--muted:#56637A;--accent:#1D4ED8;--accent2:#1E40AF;--onaccent:#FFFFFF;--accentbg:rgba(37,99,235,.09);--rowhover:rgba(15,23,42,.035);--ok:#15803D;--okbg:rgba(21,128,61,.1);--bad:#C81E1E;--badbg:rgba(220,38,38,.09);--warn:#A1460A;--warnbg:rgba(217,119,6,.12);--mutbg:rgba(15,23,42,.06);--tipbg:#0F172A;--tiptext:#F8FAFC;--prebg:#0F172A;--pretext:#E2E8F0;--hl:rgba(255,255,255,.9);--shadow:0 4px 14px rgba(15,23,42,.08);--cardshadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px -14px rgba(30,58,138,.14);--panelshadow:0 0 0 1px rgba(15,23,42,.06),0 2px 6px rgba(15,23,42,.06),0 24px 52px -14px rgba(30,58,138,.22);--lift:0 12px 30px -12px rgba(30,58,138,.22);--glassbg:#FFFFFF;--g1:transparent;--g2:transparent;--g3:transparent;--refreshshadow:none;--sel-fill:color-mix(in srgb,#2563EB 8%,#FFFFFF);--sel-glow:0 4px 14px -6px rgba(37,99,235,.35),0 2px 10px -6px rgba(217,101,112,.25);--bar-glow:0 0 10px rgba(37,99,235,.3);--cost:#1D4ED8;--costbg:rgba(37,99,235,.09);--chev:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%2364748B' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>")}
 
@@ -112,6 +112,38 @@ CSS = r'''
 :root[data-style=prism] #sidenav .nav-item:hover svg{color:var(--accent)}
 :root[data-style=prism] tbody tr:hover>td:first-child{box-shadow:inset 3px 0 0 color-mix(in srgb,var(--accent) 80%,transparent)}
 :root[data-style=prism] :is(#center-form #center-submit,.ask-row .ask-ok,#butler-submit):not(:disabled):hover{box-shadow:0 0 0 3px var(--accentbg),0 6px 18px -6px color-mix(in srgb,var(--accent) 70%,transparent)}
+
+/* ===== 微动效 · micro-motion (transform/opacity only; reduced-motion turns it all off) ===== */
+@keyframes cgRise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes cgPop{0%{transform:scale(.94)}55%{transform:scale(1.035)}100%{transform:none}}
+@keyframes cgBarY{from{opacity:0;transform:scaleY(.1)}to{opacity:1;transform:none}}
+@keyframes cgBarX{from{opacity:0;transform:scaleX(.1)}to{opacity:1;transform:none}}
+@keyframes cgModal{from{opacity:0;transform:translateY(10px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes cgItem{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
+/* KPI cards cascade in whenever their view is shown (display:none -> grid restarts CSS animations). */
+:root[data-style=prism] main .grid>.card{animation:cgRise .46s var(--ease-out) backwards;transition:transform .22s var(--ease-out),border-color .2s var(--ease),box-shadow .2s var(--ease)}
+:root[data-style=prism] main .grid>.card:nth-child(2){animation-delay:.05s}
+:root[data-style=prism] main .grid>.card:nth-child(3){animation-delay:.1s}
+:root[data-style=prism] main .grid>.card:nth-child(n+4){animation-delay:.15s}
+:root[data-style=prism] main .grid>.card:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 var(--hl),var(--lift)}
+:root[data-style=prism] main section .tile{transition:transform .22s var(--ease-out),background-color .16s var(--ease)}
+:root[data-style=prism] main section .tile:hover{transform:translateY(-2px)}
+/* Selection indicators grow in from their anchor when the state is applied. */
+:root[data-style=prism] #sidenav .nav-item.on::before,:root[data-style=prism] :is(.dd-it.on,.group-member.on,.group-channel.on,.memory-list button.on,#import-list button[aria-pressed=true])::before{animation:cgBarY .34s var(--ease-out)}
+:root[data-style=prism] :is(.router-tabs button.on,#mw-root .mw-tabs button[aria-current=page])::after{animation:cgBarX .34s var(--ease-out)}
+:root[data-style=prism] :is(.charts button.on,.quota-seg button[aria-pressed=true],.router-chips button.on,#mw-root .mw-presets button[aria-pressed=true],#mw-modal .mw-presets button[aria-pressed=true],#mw-root .mw-seg button[aria-pressed=true],#mw-modal .mw-seg button[aria-pressed=true],#todo-page .todo-bar button[aria-pressed=true],.memory-presentation button[aria-pressed=true],.tour-lang-btn.on,.theme-choice-row button[aria-pressed=true]){animation:cgPop .34s var(--ease-out)}
+/* Press feedback, icon nudge, overlays. */
+:where(:root[data-style=prism]) button:not(:disabled):active{transform:scale(.97)}
+:root[data-style=prism] #sidenav .nav-item svg{transition:transform .22s var(--ease-out),color .14s var(--ease)}
+:root[data-style=prism] #sidenav .nav-item:hover svg{transform:translateX(2px)}
+:root[data-style=prism] .modal-panel{animation:cgModal .28s var(--ease-out)}
+:root[data-style=prism] .dd.open .dd-it{animation:cgItem .24s var(--ease-out) backwards}
+:root[data-style=prism] .dd.open .dd-it:nth-child(2){animation-delay:.02s}
+:root[data-style=prism] .dd.open .dd-it:nth-child(3){animation-delay:.04s}
+:root[data-style=prism] .dd.open .dd-it:nth-child(n+4){animation-delay:.06s}
+:root[data-style=prism] .wb-chev{transition:transform .26s var(--ease-out)}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.32s;animation-timing-function:cubic-bezier(.2,0,0,1)}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
 
 /* ===== theme picker swatch ===== */
 :root .theme-choice-row button[data-theme-style=prism]::before{box-shadow:0 1px 3px #00000012}
