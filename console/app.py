@@ -76,7 +76,7 @@ def load_hotkey(state_dir):
 # 单页控制台。两种风格各有明暗主题；data-theme 仍只在 dark/warm 间切换。
 # JS 侧 reconcile() 做子节点级最小 diff，10s 刷新不再整体重建 DOM（悬浮/展开不被打断）。
 PAGE = (r'''<!doctype html>
-<html lang="zh-CN" data-theme="dark" data-style="original">
+<html lang="zh-CN" data-theme="dark" data-style="prism">
 <head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Context Gate 控制台</title>
@@ -465,7 +465,7 @@ header select,header button,header .chk{background:var(--cardT);backdrop-filter:
 #gt-list .wb-body-in{padding:0 16px}#gt-list .wb-item.open .wb-body-in{padding-bottom:16px}
 @media(max-width:38em){#gt-list .wb-head{flex-wrap:wrap;padding:12px;gap:8px}#gt-list .gt-sub{flex-basis:100%;order:1;white-space:normal}#gt-list .wb-chev{margin-left:auto}#gt-list .wb-body-in{padding:0 12px}}
 </style>
-<script>window.addEventListener('error',e=>{window.__err=(window.__err||[]).concat((e.error&&e.error.stack||e.message).split('\n').slice(0,4).join(' || '));document.title='ERR: '+e.message});try{document.documentElement.dataset.theme=localStorage.getItem('cg-theme')||'dark';document.documentElement.dataset.style=localStorage.getItem('cg-theme-style')||'original'}catch(e){}</script>
+<script>window.addEventListener('error',e=>{window.__err=(window.__err||[]).concat((e.error&&e.error.stack||e.message).split('\n').slice(0,4).join(' || '));document.title='ERR: '+e.message});try{document.documentElement.dataset.theme=localStorage.getItem('cg-theme')||'dark';var st=localStorage.getItem('cg-theme-style');if(!st||(st==='original'&&!localStorage.getItem('cg-prism-seen'))){st='prism'}localStorage.setItem('cg-prism-seen','1');document.documentElement.dataset.style=st}catch(e){}</script>
 </head><body><a class="skip-link" href="#main-content">跳到主要内容</a><nav id="sidenav" aria-label="主导航"><div class="brand"><span>Context Gate</span></div>
 <button type="button" class="nav-item on" data-v="overview" title="总览"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg><span>总览</span></button>
 <button type="button" class="nav-item" data-v="gt" title="压缩任务"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.8l6 3-6 3-6-3z"/><path d="M2 8.2l6 3 6-3"/><path d="M2 11.4l6 3 6-3"/></svg><span>压缩任务</span></button>
@@ -533,6 +533,7 @@ header select,header button,header .chk{background:var(--cardT);backdrop-filter:
 <p class="muted" id="chart-note" style="margin:6px 0 0">输入与输出用量合计，包含缓存。悬停查看数值，点击查看对应请求；时间范围由上方趋势按钮控制。</p></section>
 <div class="pagehead" data-view="sys"><h2>系统</h2><p>界面设置、快捷键和问题排查。</p></div><section data-view="sys"><h2>设置</h2>
 <div class="setrow setrow-theme"><div class="sinfo"><div class="sname">外观主题</div><div class="sdesc">选择主题风格和明暗模式，全局生效</div></div><div class="sctl"><div class="theme-presets" role="group" aria-label="外观主题">
+<fieldset class="theme-family"><legend>黑曜棱镜</legend><div class="theme-choice-row"><button type="button" data-theme-preset data-theme-style="prism" data-theme-mode="warm" aria-pressed="false">浅色</button><button type="button" data-theme-preset data-theme-style="prism" data-theme-mode="dark" aria-pressed="false">深色</button></div></fieldset>
 <fieldset class="theme-family"><legend>现有风格</legend><div class="theme-choice-row"><button type="button" data-theme-preset data-theme-style="original" data-theme-mode="warm" aria-pressed="false">浅色</button><button type="button" data-theme-preset data-theme-style="original" data-theme-mode="dark" aria-pressed="false">深色</button></div></fieldset>
 <fieldset class="theme-family"><legend>现代简约</legend><div class="theme-choice-row"><button type="button" data-theme-preset data-theme-style="mono" data-theme-mode="warm" aria-pressed="false">浅色</button><button type="button" data-theme-preset data-theme-style="mono" data-theme-mode="dark" aria-pressed="false">深色</button></div></fieldset>
 </div></div></div>
@@ -642,7 +643,7 @@ const EN={
 '用量趋势':'Usage Trend','7 天':'7 days','30 天':'30 days','本年':'This year','总计':'All time','显示缓存命中率':'Show cache hit rate','显示 tokens':'Show tokens',
 '输入与输出用量合计，包含缓存。悬停查看数值，点击查看对应请求；时间范围由上方趋势按钮控制。':'Daily actual tokens (input + output, cache included). Hover for a day’s value; click a point to open that day’s request log (that month in “All time” view). The “30 days” view also marks each day’s spend. Not affected by the filters above.',
 '界面设置、快捷键和问题排查。':'App shortcuts, global hotkey, credential audit and service logs.',
-'设置':'Settings','外观主题':'Appearance','选择主题风格和明暗模式，全局生效':'Choose a style and light or dark appearance, applies everywhere','现有风格':'Original style','现代简约':'Modern','浅色':'Light','深色':'Dark','切换浅色':'Switch to light','切换深色':'Switch to dark',
+'设置':'Settings','外观主题':'Appearance','选择主题风格和明暗模式，全局生效':'Choose a style and light or dark appearance, applies everywhere','黑曜棱镜':'Obsidian Prism','现有风格':'Original style','现代简约':'Modern','浅色':'Light','深色':'Dark','切换浅色':'Switch to light','切换深色':'Switch to dark',
 '自动刷新':'Auto refresh','每 5 秒更新显示；编辑中的表单会保留，关闭后可手动刷新':'Update every 5 seconds; preserve forms being edited. Turn off for manual refresh.',
 '侧边栏收起':'Collapse sidebar','以图标条形态显示；也可用侧边栏底部按钮切换':'Show the sidebar as a slim icon strip; also togglable from the button at its bottom','切换收起/展开':'Toggle collapsed/expanded',
 '管家模型':'Butler model','当前：读取中…':'Current: loading…','配置':'Configure',
@@ -838,7 +839,7 @@ function navigateBilling(platform,model,direction){
 function syncThemePresets(){const root=document.documentElement;for(const button of document.querySelectorAll('[data-theme-preset]')){button.setAttribute('aria-pressed',String(button.dataset.themeStyle===root.dataset.style&&button.dataset.themeMode===root.dataset.theme));button.textContent=T(button.dataset.themeMode==='warm'?'浅色':'深色')}}
 function applyThemeAttr(t,style){const root=document.documentElement;root.dataset.theme=t;root.dataset.style=style;syncThemePresets()}
 function setAppearance(style,t){
-  style=style==='mono'?'mono':'original';t=t==='warm'?'warm':'dark';
+  style=style==='mono'||style==='original'?style:'prism';t=t==='warm'?'warm':'dark';
   try{localStorage.setItem('cg-theme',t);localStorage.setItem('cg-theme-style',style)}catch(e){}
   const root=document.documentElement;
   root.classList.add('switching-appearance');
@@ -848,7 +849,7 @@ function setAppearance(style,t){
   root.classList.remove('switching-appearance');
   try{if(window.webkit&&window.webkit.messageHandlers&&window.webkit.messageHandlers.theme)window.webkit.messageHandlers.theme.postMessage(t)}catch(e){}
 }
-function setTheme(t){setAppearance(document.documentElement.dataset.style||'original',t)}
+function setTheme(t){setAppearance(document.documentElement.dataset.style||'prism',t)}
 document.querySelectorAll('[data-theme-preset]').forEach(button=>button.onclick=()=>setAppearance(button.dataset.themeStyle,button.dataset.themeMode));
 setTheme(document.documentElement.dataset.theme||'dark');
 // 子节点级最小 diff：内容没变的行不碰 DOM，10s 刷新不再打断悬浮/展开（丝滑的前提）。
@@ -2783,6 +2784,8 @@ html{scrollbar-gutter:stable}
 
 '''
 PAGE = PAGE.replace('</style>', THEME_STYLE_CSS + '\n</style>', 1)
+from console.prism_ui import CSS as PRISM_CSS
+PAGE = PAGE.replace('</style>', PRISM_CSS + '\n</style>', 1)
 from console.surface_ui import CSS as SURFACE_CSS
 PAGE = PAGE.replace('</style>', SURFACE_CSS + '\n</style>', 1)
 

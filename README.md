@@ -29,6 +29,9 @@ A local-first AI context middleware, usage ledger, multi-agent console, and desk
 
 ## 快速开始 / Quick Start
 
+> **让 AI 帮你部署**：把 [docs/DEPLOY_PROMPT.md](docs/DEPLOY_PROMPT.md) 里的提示词整段复制给 Claude Code / Codex，它会逐步完成安装、启动、MCP 接入和本地接口探测，最后给你一张状态表。
+> **Let an agent deploy it**: paste the prompt in [docs/DEPLOY_PROMPT.md](docs/DEPLOY_PROMPT.md) into Claude Code / Codex.
+
 ### 1. 启动控制台（零依赖）
 
 ```sh
