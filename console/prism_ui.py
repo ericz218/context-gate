@@ -138,6 +138,15 @@ CSS = r'''
 :root[data-style=prism] :is(.charts button.on,.quota-seg button[aria-pressed=true],.router-chips button.on,#mw-root .mw-presets button[aria-pressed=true],#mw-modal .mw-presets button[aria-pressed=true],#mw-root .mw-seg button[aria-pressed=true],#mw-modal .mw-seg button[aria-pressed=true],#todo-page .todo-bar button[aria-pressed=true],.memory-presentation button[aria-pressed=true]){position:relative;background:var(--sel-fill) padding-box}
 :root[data-style=prism] :is(.charts button.on,.quota-seg button[aria-pressed=true],.router-chips button.on,#mw-root .mw-presets button[aria-pressed=true],#mw-modal .mw-presets button[aria-pressed=true],#mw-root .mw-seg button[aria-pressed=true],#mw-modal .mw-seg button[aria-pressed=true],#todo-page .todo-bar button[aria-pressed=true],.memory-presentation button[aria-pressed=true])::after{content:"";position:absolute;inset:-1px;border-radius:999px;padding:1.5px;background:conic-gradient(from 200deg,#4C8DF6,#9B72CB,#D96570,#F2B84B,#4C8DF6);-webkit-mask:conic-gradient(from 200deg,#000 var(--cg-sweep),transparent 0),linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:source-in,xor;mask:conic-gradient(from 200deg,#000 var(--cg-sweep),transparent 0),linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:intersect,exclude;animation:cgDraw .6s cubic-bezier(.4,0,.2,1) backwards;pointer-events:none}
 
+/* Two-option segmented (.quota-seg, e.g. 按付费设置/按官方标价): one prism thumb slides between options, like 计费/用量. */
+:root[data-style=prism] .quota-seg{position:relative}
+:root[data-style=prism] .quota-seg::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);border-radius:999px;border:1px solid transparent;background:linear-gradient(var(--sel-fill),var(--sel-fill)) padding-box,var(--prism) border-box;box-shadow:var(--sel-glow);transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s;pointer-events:none}
+:root[data-style=prism] .quota-seg:has(>button:nth-of-type(2)[aria-pressed=true])::before{transform:translateX(calc(100% + 4px))}
+:root[data-style=prism] .quota-seg:not(:has(>button[aria-pressed=true]))::before{opacity:0}
+:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button{position:relative;z-index:1;background:transparent;box-shadow:none;animation:none}
+:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[aria-pressed=true]{background:transparent;box-shadow:none;animation:none;color:var(--text)}
+:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button::after{content:none}
+
 /* Press feedback, icon nudge, overlays. */
 :where(:root[data-style=prism]) button:not(:disabled):active{transform:scale(.97)}
 :root[data-style=prism] #sidenav .nav-item svg{transition:transform .22s var(--ease-out),color .14s var(--ease)}
