@@ -104,6 +104,11 @@ CSS = r'''
 #mw-calc-form hr{grid-column:1/-1;width:100%;height:0;border:0;border-top:1px solid var(--line);margin:4px 0}
 @media(min-width:38.001em){#workbench .wb-name{flex:0 0 auto;max-width:32%}}
 .propbar:not(:has(> i:not([hidden]))){display:none}
+/* Ranked bar rows slide by var(--dy)*100% of their OWN height: a wrapped row breaks the stack. */
+.brow>*{white-space:nowrap;min-width:0}
+.brow .breq{overflow:hidden;text-overflow:ellipsis}
+@media(min-width:38.001em){#plat-viz .brow{grid-template-columns:150px minmax(24px,1fr) 84px 120px}}
+:root[data-style=prism] #refresh-note:empty{display:none}
 
 /* ===== narrow layout: horizontal nav ===== */
 @media(max-width:55em){
