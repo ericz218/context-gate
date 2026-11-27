@@ -140,10 +140,10 @@ CSS = r'''
 
 /* Two-option segmented (.quota-seg, e.g. 按付费设置/按官方标价): one prism thumb slides between options, like 计费/用量. */
 :root[data-style=prism] .quota-seg{position:relative}
-:root[data-style=prism] .quota-seg::before{content:"";position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);border-radius:999px;border:1px solid transparent;background:linear-gradient(var(--sel-fill),var(--sel-fill)) padding-box,var(--prism) border-box;box-shadow:var(--sel-glow);transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s;pointer-events:none}
+:root[data-style=prism] .quota-seg::before{content:"";position:absolute;top:50%;height:26px;margin-top:-13px;left:4px;width:calc(50% - 6px);border-radius:999px;border:1px solid transparent;background:linear-gradient(var(--sel-fill),var(--sel-fill)) padding-box,var(--prism) border-box;box-shadow:var(--sel-glow);transition:transform .28s cubic-bezier(.2,.8,.2,1),opacity .2s;pointer-events:none}
 :root[data-style=prism] .quota-seg:has(>button:nth-of-type(2)[aria-pressed=true])::before{transform:translateX(calc(100% + 4px))}
 :root[data-style=prism] .quota-seg:not(:has(>button[aria-pressed=true]))::before{opacity:0}
-:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button{position:relative;z-index:1;background:transparent;box-shadow:none;animation:none}
+:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button{position:relative;z-index:1;min-height:26px;height:26px;padding:0 14px;font-size:13px;border:0;transition:color .28s ease;background:transparent;box-shadow:none;animation:none}
 :root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[aria-pressed=true]{background:transparent;box-shadow:none;animation:none;color:var(--text)}
 :root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[type]::after,:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[aria-pressed]::after{content:none;display:none}
 
