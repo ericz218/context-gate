@@ -145,7 +145,7 @@ CSS = r'''
 :root[data-style=prism] .quota-seg:not(:has(>button[aria-pressed=true]))::before{opacity:0}
 :root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button{position:relative;z-index:1;background:transparent;box-shadow:none;animation:none}
 :root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[aria-pressed=true]{background:transparent;box-shadow:none;animation:none;color:var(--text)}
-:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button::after{content:none}
+:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[type]::after,:root[data-style=prism] :is(#cost-mode,.quota-seg).quota-seg>button[aria-pressed]::after{content:none;display:none}
 
 /* Press feedback, icon nudge, overlays. */
 :where(:root[data-style=prism]) button:not(:disabled):active{transform:scale(.97)}
