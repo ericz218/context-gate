@@ -1113,9 +1113,12 @@ function applyCostMode(m){
 }
 applyCostMode('actual');
 // 价格模式存在后端（cost-mode.json），重启后保持；切换后立即重取统计。
-document.querySelectorAll('#cost-mode button').forEach(b=>b.addEventListener('click',async()=>{
-  if(b.dataset.mode===costMode)return;
-  const prev=costMode,btns=[...document.querySelectorAll('#cost-mode button')];
+// Two options: a click anywhere on the toggle flips to the other one (same as the 计费/用量 toggle).
+$('cost-mode').addEventListener('click',async()=>{
+  const btns=[...document.querySelectorAll('#cost-mode button')];
+  if(btns.some(x=>x.disabled))return;
+  const b=btns.find(x=>x.dataset.mode!==costMode);if(!b)return;
+  const prev=costMode;
   applyCostMode(b.dataset.mode);btns.forEach(x=>x.disabled=true);
   try{
     const r=await fetch('v1/settings/cost-mode',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({mode:b.dataset.mode})});
@@ -1124,7 +1127,7 @@ document.querySelectorAll('#cost-mode button').forEach(b=>b.addEventListener('cl
   }catch(e){applyCostMode(prev);refreshFeedback('error',T('切换价格模式失败：')+e.message);return;}
   finally{btns.forEach(x=>x.disabled=false);}
   refresh();
-}));
+});
 function renderBilling(){
   if(!lastData)return;
   const bgroups=(lastData.by_platform||[]).filter(g=>g.requests>0);
